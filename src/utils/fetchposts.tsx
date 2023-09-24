@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { deletepost, findall } from "./fetchers/fetchers";
-import { useSelector } from "react-redux";
 
 const posts = { postarray: [], update: false, count: 0 };
 const Fetchpostslice = createSlice({
@@ -29,7 +28,7 @@ export const fetcher = (uid: any, page: number, count: number) => {
     dispatch(FetchpostsActions.setcount(data.data.count));
   };
 };
-export const delpost = (id) => {
+export const delpost = (id: any) => {
   return async (dispatch: any) => {
     await deletepost(id, "post");
     dispatch(FetchpostsActions.setstatus());

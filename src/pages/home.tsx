@@ -26,7 +26,8 @@ function Home() {
       </button>
 
       <div className="flex gap-8 flex-wrap items-center justify-center w-[90%] mx-auto">
-        {posts !== undefined && posts.map((e, i) => <Cards data={e} key={i} />)}
+        {posts !== undefined &&
+          posts.map((e: object, i: number) => <Cards data={e} key={i} />)}
       </div>
       <div className="mx-auto flex gap-5">
         <button
