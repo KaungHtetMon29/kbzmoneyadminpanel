@@ -29,12 +29,16 @@ export const patchone = async (
   const response = await data.json();
   return response;
 };
-export const findall = async (userid: any) => {
+export const findall = async (userid: any, page: number, count: number) => {
   const data = await fetch(
-    `${import.meta.env.VITE_API_URL}/post?user=${userid}`
+    `${
+      import.meta.env.VITE_API_URL
+    }/post?user=${userid}&&page=${page}&&count=${count}`
   );
   const response = await data.json();
-  return response;
+  console.log(response.ok);
+
+  return { data: response, status: response.ok };
 };
 export const deletepost = async (id: string | number, path: string) => {
   const data = await fetch(`${import.meta.env.VITE_API_URL}/${path}/${id}`, {

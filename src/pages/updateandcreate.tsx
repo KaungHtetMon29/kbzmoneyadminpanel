@@ -45,12 +45,18 @@ function UpdateandCreate() {
       userid: id,
     };
     if (postid !== "new") {
-      patchone(data, "post", postid);
+      async function patchfetch() {
+        const res = await patchone(data, "post", postid);
+        res.message === "success" && navi("/");
+      }
+      patchfetch();
     } else {
-      postfetcher(data, "post");
-      dispatch(FetchpostsActions.setstatus());
+      async function postfetch() {
+        const res = await postfetcher(data, "post");
+        res.message === "success" && navi("/");
+      }
+      postfetch();
     }
-    navi("/");
   };
   useEffect(() => {
     async function getpost() {
@@ -62,7 +68,6 @@ function UpdateandCreate() {
     }
 
     getpost();
-    dispatch(FetchpostsActions.setstatus());
   }, []);
   return (
     <div className="items-center mx-auto [&>*]:w-full flex w-80  flex-col gap-7 [&>input]:rounded-md [&>input]:py-2 [&>input]:px-4 [&>input]:bg-slate-200">
@@ -88,11 +93,17 @@ function UpdateandCreate() {
         placeholder="content"
         className="border-2 border-black w-full p-2 h-72 text-start  items-center flex text-black resize-none"
       />
-      <input
+      <textarea
+        defaultValue={postid !== "new" ? postdata.benefit : ""}
+        ref={benefits}
+        placeholder="benefit"
+        className="border-2 border-black w-full p-2 h-72 text-start  items-center flex text-black resize-none"
+      />
+      {/* <input
         placeholder="benefits"
         ref={benefits}
         defaultValue={postid !== "new" ? postdata.benefit : ""}
-      />
+      /> */}
       <input
         placeholder="category"
         ref={category}

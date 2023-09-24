@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { deletepost, findall } from "./fetchers/fetchers";
 import { useSelector } from "react-redux";
 
-const posts = { postarray: [], update: false };
+const posts = { postarray: [], update: false, count: 0 };
 const Fetchpostslice = createSlice({
   name: "fetchpost",
   initialState: posts,
@@ -15,12 +15,18 @@ const Fetchpostslice = createSlice({
       state.update = !state.update;
       console.log(state.update);
     },
+    setcount(state, action) {
+      state.count = action.payload;
+      console.log(action.payload);
+    },
   },
 });
-export const fetcher = (uid: any) => {
+export const fetcher = (uid: any, page: number, count: number) => {
   return async (dispatch: any) => {
-    const data = await findall(uid);
-    dispatch(FetchpostsActions.setposts(data));
+    const data = await findall(uid, page, count);
+    console.log(data.data.count);
+    dispatch(FetchpostsActions.setposts(data.data.post));
+    dispatch(FetchpostsActions.setcount(data.data.count));
   };
 };
 export const delpost = (id) => {
